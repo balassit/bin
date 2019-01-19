@@ -22,5 +22,3 @@ case "$GITHUB_REF" in
     echo "$GITHUB_REF does not match $pattern"
     exit 78
 esac
-
-
