@@ -14,10 +14,10 @@ case "$GITHUB_REF" in
     exit 0
     ;;
   *)
-    if [[ $(echo "$pattern" | sed -E "s/^([^/]*\/){2}//") == !* ]] ;
+    if [[ $(echo "$pattern" | sed -E "s/^([^/]*\/){2}//") == !* ]] && [[ $(echo "$pattern" | sed -E "s/^([^/]*\/){2}//" | cut -c 2-) != $(echo $GITHUB_REF | sed -E "s/^([^/]*\/){2}//") ]];
     then
-        echo "$GITHUB_REF is a negation of $pattern"
-        exit 0
+      echo "$GITHUB_REF matches $pattern"
+      exit 0
     fi
     echo "$GITHUB_REF does not match $pattern"
     exit 78
