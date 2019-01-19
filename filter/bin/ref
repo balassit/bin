@@ -14,7 +14,7 @@ case "$GITHUB_REF" in
     exit 0
     ;;
   *)
-    if [[ ${pattern##*/} == !* ]] ;
+    if [[ $(echo "$pattern" | sed -E "s/^([^/]*\/){2}//") == !* ]] ;
     then
         echo "$GITHUB_REF is a negation of $pattern"
         exit 0
