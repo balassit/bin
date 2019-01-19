@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 
@@ -14,6 +14,11 @@ case "$GITHUB_REF" in
     exit 0
     ;;
   *)
+    if [[ ${pattern##*/} == !* ]] ;
+    then
+        echo "$GITHUB_REF is a negation of $pattern"
+        exit 0
+    fi
     echo "$GITHUB_REF does not match $pattern"
     exit 78
 esac
