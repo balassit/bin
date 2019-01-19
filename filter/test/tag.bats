@@ -40,18 +40,18 @@ PATH="$PATH:$BATS_TEST_DIRNAME/../bin"
 
 @test "tag: ref is a negation of tag pattern" {
   export GITHUB_REF=refs/tags/v1.2.3
-  run tag !v1.2.3
-  [ "$status" -eq 78 ]
-  [ "$output" = "refs/tags/v1.2.3 does not match refs/tags/!v1.2.3" ]
-
   run tag v1.2.3
   [ "$status" -eq 0 ]
   [ "$output" = "refs/tags/v1.2.3 matches refs/tags/v1.2.3" ]
 
+  run tag !v1.2.3
+  [ "$status" -eq 78 ]
+  [ "$output" = "refs/tags/v1.2.3 does not match refs/tags/!v1.2.3" ]
+
   run tag !release
   [ "$status" -eq 0 ]
   [ "$output" = "refs/tags/v1.2.3 matches refs/tags/!release" ]
-
+  
   run tag release
   [ "$status" -eq 78 ]
   [ "$output" = "refs/tags/v1.2.3 does not match refs/tags/release" ]

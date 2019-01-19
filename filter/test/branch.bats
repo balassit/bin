@@ -49,19 +49,19 @@ PATH="$PATH:$BATS_TEST_DIRNAME/../bin"
 
 @test "branch: is a negation of substring" {
   export GITHUB_REF=refs/heads/the-masters-tournament
-  run branch master
-  [ "$status" -eq 78 ]
-  [ "$output" = "refs/heads/the-masters-tournament does not match refs/heads/master" ]
-
-  run branch !master
+  run branch the-masters-tournament
   [ "$status" -eq 0 ]
-  [ "$output" = "refs/heads/the-masters-tournament matches refs/heads/!master" ]
+  [ "$output" = "refs/heads/the-masters-tournament matches refs/heads/the-masters-tournament" ]
 
   run branch !the-masters-tournament
   [ "$status" -eq 78 ]
   [ "$output" = "refs/heads/the-masters-tournament does not match refs/heads/!the-masters-tournament" ]
-
-  run branch the-masters-tournament
+  
+  run branch !master
   [ "$status" -eq 0 ]
-  [ "$output" = "refs/heads/the-masters-tournament matches refs/heads/the-masters-tournament" ]
+  [ "$output" = "refs/heads/the-masters-tournament matches refs/heads/!master" ]
+
+  run branch master
+  [ "$status" -eq 78 ]
+  [ "$output" = "refs/heads/the-masters-tournament does not match refs/heads/master" ]
 }
